@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ employee.first_name }} {{ employee.last_name }}</title>
+</head>
+<body>
+    <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
+    <p>Department: {{ employee.department }}</p>
+
+    <h2>Vote</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>
+            <input type="radio" name="rating" value="positive"> Positive
+        </label>
+        <label>
+            <input type="radio" name="rating" value="neutral"> Neutral
+        </label>
+        <label>
+            <input type="radio" name="rating" value="negative"> Negative
+        </label>
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>add a comment</h2>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="comment" rows="4" cols="40" placeholder="Write a comment ..."></textarea><br>
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.text }} — {{ comment.created_at }}</li>
+        {% empty %}
+            <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'employee_list' %}">← Return to the empoyee list </a>
+</body>
+</html>
